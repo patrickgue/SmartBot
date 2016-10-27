@@ -1,12 +1,18 @@
 "use strict";
 
 const express = require('express');
-const wordDef = require('word-definition');
+const wd = require('word-definition');
 const sqlite3 = require('sqlite3');
+const https = require("https");
+const http = require("http");
 
 let app = express();
 
 
-wordDef.getDef("Help", "en", null, function(def) {
-    console.log(def);
+https.get("https://en.wikipedia.org/wiki/", function(data) {
+    console.log(data);
+});
+
+wd.getDef("keyboard", "en", null, function(definition) {
+    console.log(definition);
 });
