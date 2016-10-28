@@ -29,6 +29,7 @@ db.serialize(function(){
 	       + "wordSentenceWordId INTEGER, "
 	       + "wordSentencePosition INTEGER"
 	       + ")")
+
 	
 	
     }
