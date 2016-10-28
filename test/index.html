@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>Add Text</title>
+	<meta charset="utf-8"/>
+    </head>
+    <body>
+	<textarea id="text"></textarea>
+	<button>send</button>
+	<pre id="output"></pre>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script>
+	 $(document).ready(function() {
+	     $("button").on("click", function() {
+		 $.post("http://localhost:8080/message/", {
+		     message : $("#text").val()
+		 }, function(data) {
+		     $("#output").text(data);
+		 });
+	     });
+	 });
+	 
+	</script>
+    </body>
+</html>
