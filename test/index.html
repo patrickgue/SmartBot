@@ -15,7 +15,7 @@
 		 $.post("http://localhost:8080/message/", {
 		     message : $("#text").val()
 		 }, function(data) {
-		     $("#output").text(data);
+		     $("#output").text(JSON.stringify(data, null, "  "));
 		 });
 	     });
 	 });

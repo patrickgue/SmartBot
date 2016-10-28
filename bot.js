@@ -1,5 +1,11 @@
 "use strict";
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
+
 const express = require('express');
 const sqlite3 = require('sqlite3');
 const https = require("https");
@@ -29,7 +35,7 @@ for(let word of words) {
 }*/
 
 app.post("/message/", function(req, res) {
-    let message = req.body.message.replace(/[,-]./g,"");
+    let message = req.body.message.replaceAll(",","").replaceAll("-","").replaceAll("\n","");
     let sentenceArray = message.split(/[.?!:;]./g);
     let sentences = [];
 
@@ -55,16 +61,19 @@ app.post("/message/", function(req, res) {
 			});
 		    });
 		}
+
+		if(i+1 === wordArray.length) {
+		    sentenceDone(words);
+		    if(j+1 === sentenceArray.length) {
+			messageDone();
+		    }
+		}
 	    });
 
-	    if(i+1 === wordArray.length) {
-		sentenceDone(words);
-	    }
+	    
 	}
 	console.log(j);
-	if(j+1 === sentenceArray.length) {
-	    messageDone();
-	}
+	
     }
 
     function messageDone() {
@@ -73,6 +82,7 @@ app.post("/message/", function(req, res) {
 
     function sentenceDone(words) {
 	sentences.push(words);
+	
     }
     
     
