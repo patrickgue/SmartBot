@@ -27,6 +27,7 @@ db.serialize(function(){
 	db.run("CREATE TABLE TSBT_WORD_SENTENCE ("
 	       + "wordSentenceId INTEGER PRIMARY KEY AUTOINCREMENT, "
 	       + "wordSentenceWordId INTEGER, "
+	       + "wordSentenceSentenceId INTEGER, "
 	       + "wordSentencePosition INTEGER"
 	       + ")")
 

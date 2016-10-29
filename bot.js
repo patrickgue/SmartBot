@@ -82,6 +82,17 @@ app.post("/message/", function(req, res) {
 
     function sentenceDone(words) {
 	sentences.push(words);
+	db.run("INSERT INTO TSBT_SENTENCE DEFAULT VALUES",[], function(key) {
+	    let orderedWords = words.sort(function(v1, v2) {
+		v1.wordName < v2.wordName
+	    });
+
+	    for(let i = 0; i < orderedWords.length; i++) {
+		db.run("INSERT INTO TSBT_WORD_SENTENCE (wordSentenceWordId, wordSentenceSentenceId, wordSentencePosition) VALUES(?,?,?)", [orderedWords[i][0].wordId, key, i]);
+		console.log(orderedWords[i][0], key, i);
+	    }
+	    
+	});
 	
     }
     
