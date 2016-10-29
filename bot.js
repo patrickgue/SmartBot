@@ -7,7 +7,6 @@ String.prototype.replaceAll = function(search, replacement) {
 
 
 const express = require('express');
-const sqlite3 = require('sqlite3');
 const https = require("https");
 const http = require("http");
 const db = require('./services/dbservice.mysql.js');
