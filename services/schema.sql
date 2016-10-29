@@ -18,6 +18,7 @@ CREATE TABLE TSBT_WORD (
 CREATE TABLE TSBT_SENTENCE (
        sentenceId INTEGER  AUTO_INCREMENT,
        sentenceUsage INTEGER DEFAULT 0,
+       sentenceHash VARCHAR(64),
 
        PRIMARY KEY (sentenceId)
 );

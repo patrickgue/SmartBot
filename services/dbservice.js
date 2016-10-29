@@ -21,7 +21,8 @@ db.serialize(function(){
 	       + ")");
 	db.run("CREATE TABLE TSBT_SENTENCE ("
 	       + "sentenceId INTEGER PRIMARY KEY AUTOINCREMENT, "
-	       + "sentenceUsage INTEGER DEFAULT 0"
+	       + "sentenceUsage INTEGER DEFAULT 0,"
+	       + "sentenceHash STRING"
 	       + ")");
 
 	db.run("CREATE TABLE TSBT_WORD_SENTENCE ("

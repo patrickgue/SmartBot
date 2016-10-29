@@ -10,9 +10,9 @@ const express = require('express');
 const sqlite3 = require('sqlite3');
 const https = require("https");
 const http = require("http");
-const db = require('./services/dbservice.js');
+const db = require('./services/dbservice.mysql.js');
 const bodyParser = require('body-parser');
-
+const sha1 = require('sha1');
 
 let app = express();
 
@@ -35,7 +35,7 @@ for(let word of words) {
 }*/
 
 app.post("/message/", function(req, res) {
-    let message = req.body.message || ;
+    let message = req.body.message;
     message = message.replaceAll(",","").replaceAll("-","").replaceAll("\n","");
     let sentenceArray = message.split(/[.?!:;]./g);
     let sentences = [];
@@ -54,6 +54,7 @@ app.post("/message/", function(req, res) {
 		    words[i] = data;
 		}
 		else {
+
 		    db.run("INSERT INTO TSBT_WORD (wordName) VALUES (?)",[word.toLowerCase()], function(data) {
 			words[i] = {
 			    wordId : data,
@@ -83,21 +84,33 @@ app.post("/message/", function(req, res) {
 
     function sentenceDone(words) {
 	sentences.push(words);
-	db.run("INSERT INTO TSBT_SENTENCE DEFAULT VALUES",[], function(key) {
-	    /*let orderedWords = words.sort(function(v1, v2) {
-		v1.wordName < v2.wordName
-	    });*/
 
-	    for(let i = 0; i < words.length; i++) {
-		try{
-		    db.run("INSERT INTO TSBT_WORD_SENTENCE (wordSentenceWordId, wordSentenceSentenceId, wordSentencePosition) VALUES(?,?,?)", [words[i][0].wordId, key, i]);
-		} catch(e) {
-		    console.log(e);
-		}
-		console.log("Word In Sentence:",words[i][0], key, i);
+	let hash = sha1(words.join(""));
+	
+	db.select("SELECT * FROM TSBT_SENTENCE WHERE sentenceHash = \""+hash+"\"", function(data) {
+	    if(data.length == 0) {
+		db.run("INSERT INTO TSBT_SENTENCE (sentenceHash) VALUES(?)",[sha1(words.join())], function(key) {
+		    /*let orderedWords = words.sort(function(v1, v2) {
+		      v1.wordName < v2.wordName
+		      });*/
+		    
+		    for(let i = 0; i < words.length; i++) {
+			try{
+			    db.run("INSERT INTO TSBT_WORD_SENTENCE (wordSentenceWordId, wordSentenceSentenceId, wordSentencePosition) VALUES(?,?,?)", [words[i][0].wordId, key, i]);
+			} catch(e) {
+			    console.log(e);
+			}
+			console.log("Word In Sentence:",words[i][0], key, i);
+		    }
+		});
+		
 	    }
-	    
+	    /*else {
+		db
+	    }*/
 	});
+	
+
 	
     }
     
