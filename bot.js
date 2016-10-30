@@ -28,10 +28,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-/*
-for(let word of words) {
-    db.run("INSERT INTO TSBT_WORD (wordName) VALUES(\"" + word + "\") ");
-}*/
 
 app.post("/message/", function(req, res) {
     let message = req.body.message;
@@ -40,10 +36,10 @@ app.post("/message/", function(req, res) {
     let sentences = [];
 
     for(let j = 0; j < sentenceArray.length; j++) {
-	let sentence = sentenceArray[j];
+	let sentence = sentenceArray[j].replaceAll(".").replaceAll(":").replaceAll(";").replaceAll("?").replaceAll("!");
 	let wordArray = sentence.split(" ");
 	let words = [];
-
+	
 	for(let i = 0; i < wordArray.length; i++) {
 	    let word = wordArray[i]
 	    db.select("SELECT * FROM TSBT_WORD WHERE wordName = \""+word.toLowerCase()+"\"", function(data) {
@@ -87,7 +83,7 @@ app.post("/message/", function(req, res) {
 	let hash = sha1(words.join(""));
 	
 	db.select("SELECT * FROM TSBT_SENTENCE WHERE sentenceHash = \""+hash+"\"", function(data) {
-	    if(data.length == 0) {
+	    if(data.length === 0) {
 		db.run("INSERT INTO TSBT_SENTENCE (sentenceHash) VALUES(?)",[sha1(words.join())], function(key) {
 		    /*let orderedWords = words.sort(function(v1, v2) {
 		      v1.wordName < v2.wordName
@@ -104,9 +100,11 @@ app.post("/message/", function(req, res) {
 		});
 		
 	    }
-	    /*else {
-		db
-	    }*/
+	    else {
+		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ?",[data.sentenceUsage + 1], function() {
+		    console.log(data.sentenceUsage + 1);
+		});
+	    }
 	});
 	
 
