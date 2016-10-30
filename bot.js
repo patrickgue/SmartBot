@@ -85,9 +85,6 @@ app.post("/message/", function(req, res) {
 	db.select("SELECT * FROM TSBT_SENTENCE WHERE sentenceHash = \""+hash+"\"", function(data) {
 	    if(data.length === 0) {
 		db.run("INSERT INTO TSBT_SENTENCE (sentenceHash) VALUES(?)",[sha1(words.join())], function(key) {
-		    /*let orderedWords = words.sort(function(v1, v2) {
-		      v1.wordName < v2.wordName
-		      });*/
 		    
 		    for(let i = 0; i < words.length; i++) {
 			try{
