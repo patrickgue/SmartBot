@@ -98,10 +98,9 @@ app.post("/message/", function(req, res) {
 			console.log("Word In Sentence:",words[i][0], key, i);
 		    }
 		});
-		
 	    }
 	    else {
-		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ?",[data[0].sentenceUsage + 1], function() {
+		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ? WHERE sentenceId = ?",[data[0].sentenceUsage + 1, data[0].sentenceId], function() {
 		    console.log(data.sentenceUsage + 1);
 		});
 	    }
