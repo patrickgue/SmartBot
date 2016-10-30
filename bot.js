@@ -101,17 +101,12 @@ app.post("/message/", function(req, res) {
 		
 	    }
 	    else {
-		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ?",[data.sentenceUsage + 1], function() {
+		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ?",[data[0].sentenceUsage + 1], function() {
 		    console.log(data.sentenceUsage + 1);
 		});
 	    }
 	});
-	
-
-	
     }
-    
-    
 });
 
 
