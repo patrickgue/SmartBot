@@ -100,8 +100,8 @@ app.post("/message/", function(req, res) {
 		});
 	    }
 	    else {
-		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ? WHERE sentenceId = ?",[data[0].sentenceUsage + 1, data[0].sentenceId], function() {
-		    console.log(data.sentenceUsage + 1);
+		db.run("UPDATE TSBT_SENTENCE SET sentenceUsage = ? WHERE sentenceHash = ?",[data[0].sentenceUsage + 1, hash], function() {
+		    console.log(data.sentenceUsage + 1, hash);
 		});
 	    }
 	});
