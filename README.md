@@ -10,4 +10,4 @@ machine learning technologies.
 ### Libraries
 Here you can find a list of libraries which may could be helpful in this application
 
-(https://www.npmjs.com/package/word-definition)[word-definition (npm)]: Searches word in Wiktionary
+[word-definition (npm)](https://www.npmjs.com/package/word-definition): Searches word in Wiktionary
