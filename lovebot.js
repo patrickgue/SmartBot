@@ -27,6 +27,28 @@ let zitate = [
     "Jede Befreiungsbewegung verändert ihren Charakter, wenn sie von der Utopie zur Realität übergeht."
 ];
 
+let triggerwords = [
+    "hitler",
+    "hass",
+    "love",
+    "pussy",
+    "jarvis",
+    "alfred",
+    "dick",
+    "gay",
+    "yoe",
+    "jude",
+    "hey",
+    "nei",
+    "smartbot",
+    "suprem",
+    "güni",
+    "günni",
+    "günard",
+    "günnard",
+    "kill"
+];
+
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
@@ -46,7 +68,7 @@ app.post("/message/", function(req, res) {
 
     /* Hilfe */
     if(message.indexOf("smartbot, hilfe") > -1) {
-	res.end("smartbot, [...] (1) was ist ... (2) kunst");
+	res.end("smartbot, [...] (1) was ist ... (2) kunst (3) ding ... (4) alle dinge (5) marx");
     }
     
     /* Wikibot */
@@ -103,34 +125,25 @@ app.post("/message/", function(req, res) {
 	}
     }
     
-    /* Tash filter */
-    
-    if(message.indexOf("hitler") > -1||
-       message.indexOf("hass") > -1||
-       message.indexOf("love") > -1||
-       message.indexOf("pussy") > -1||
-       message.indexOf("jarvis") > -1||
-       message.indexOf("alfred") > -1||
-       message.indexOf("dick") > -1||
-       message.indexOf("gay") > -1||
-       message.indexOf("yoe") > -1||
-       message.indexOf("jude")> -1 ||
-       message.indexOf("hey") > -1||
-       message.indexOf("nei") > -1 ||
-       message.indexOf("smartbot") > -1 ||
-       message.indexOf("suprem") > -1 ||
-       message.indexOf("güni") > -1 ||
-       message.indexOf("günni") > -1 ||
-       message.indexOf("günard") > -1 ||
-       message.indexOf("günnard") > -1 ||
-       message.indexOf("kill") > -1 
-      ) {
-	res.end("Many Love!!!");
+    /* Trigger filter 
+     *  send many love if someone tries to be offensive
+     */
+    for(let tr of triggerwords) {
+	if(message.indexOd(tr) > -1) {
+	    res.end("Many Love!!!");
+	}
     }
-    else {
+
+
+
+    /* default answer if non of the functionalities above are used */
+    try {
 	res.status(500);
 	res.end();
+    } catch(e) {
+	console.log("already ended http connection");
     }
+
 });
 
 var server = app.listen(4084, function() {
