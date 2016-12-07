@@ -14,6 +14,11 @@ $keller = "http://k-keller.com:4084/message";
 $message = "";
 $chatId = "";
 
+//Variables used for error processing
+$first_name = "";
+$username = "";
+$type = "";
+
 foreach ($contentArray as $key => $value) {
 	if($key === "message"){
 		foreach ($value as $messagekey => $messagevalue) {
@@ -24,6 +29,15 @@ foreach ($contentArray as $key => $value) {
 				foreach ($messagevalue as $chatkey => $chatvalue) {
 					if($chatkey === "id"){
 						$chatId = $chatvalue;
+					}
+					if($chatkey === "first_name"){
+						$first_name = $chatvalue;
+					}
+					if($chatkey === "username"){
+						$username = $chatvalue;
+					}
+					if($chatkey === "type"){
+						$type = $chatvalue;
 					}
 				}
 			}
@@ -51,7 +65,7 @@ if($chatId != $admin) {
 	if( ($json = curl_exec($ch) ) === false)
 	{
 		//Connection failed. Contacting admin group
-		@file_get_contents($website."/sendmessage?chat_id=".$admin."&text=Accessing ".$keller." failed.%0AThe given word/sentence was '".$message."'.%0AStatus: ".curl_error($ch));
+		@file_get_contents($website."/sendmessage?chat_id=".$admin."&text=Accessing ".$keller." failed.%0AThe given word/sentence was '".$message.".%0AStatus: %0A".curl_error($ch)."%0AChatId=".$chatId."%0AUsername=".$username."%0AFirst Name=".$first_name."%0AChat Type=".$type);
 	}
 	else
 	{
