@@ -1,6 +1,6 @@
 package ch.patrickguenthard.ai.graphutil
 
-import ch.patrickguenthard.ai.model.Vertex
+import ch.patrickguenthard.ai.model.{Edge, Vertex}
 
 /**
   * Created by Patrick on 08.12.2016.
@@ -53,4 +53,12 @@ object GraphUtil {
 
     })
   }
+
+  def toSaveString(vertex:Vertex):String = {
+    for(e:Edge <- vertex.inEdges) {
+
+    }
+    vertex.name + "[" + "]"
+  }
+
 }

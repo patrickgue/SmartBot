@@ -7,7 +7,7 @@ import scala.collection._
   */
 class Vertex(aname:String) {
   var name:String = aname
-  var properties:mutable.MutableList[Edge] = mutable.MutableList[Edge]()
+  var properties:mutable.MutableList[Property] = mutable.MutableList[Property]()
   var inEdges:mutable.MutableList[Edge] = mutable.MutableList[Edge]()
   var outEdges:mutable.MutableList[Edge] = mutable.MutableList[Edge]()
   var visited = false
@@ -16,5 +16,9 @@ class Vertex(aname:String) {
     var edge = new Edge(this, newVertex)
     outEdges += edge
     newVertex.inEdges += edge
+  }
+
+  def addProperty(str:String, obj:Any) = {
+    properties += new Property(str,obj)
   }
 }
