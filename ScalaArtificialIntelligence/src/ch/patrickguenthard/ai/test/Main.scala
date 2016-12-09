@@ -1,4 +1,4 @@
-package ch.patrickguenthard.scala.tutorial.main
+package ch.patrickguenthard.ai.test
 
 import ch.patrickguenthard.ai.graphutil.GraphUtil
 import ch.patrickguenthard.ai.model.Vertex
