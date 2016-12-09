@@ -2,6 +2,7 @@ package ch.patrickguenthard.scala.tutorial.main
 
 import ch.patrickguenthard.ai.graphutil.GraphUtil
 import ch.patrickguenthard.ai.model.Vertex
+import ch.patrickguenthard.ai.persistence.PersistenceUtil
 //import ch.patrickguenthard.ai.persistence.PersistenceUtil
 
 
@@ -24,6 +25,8 @@ object Main {
     baseVertex.addVertex(b)
     baseVertex.addVertex(c)
 
+    baseVertex
+
     GraphUtil.processAll(baseVertex, (vtx:Vertex) => {
       var str:String = vtx.name + " | {"
       for(out <- vtx.outEdges) {
@@ -43,5 +46,14 @@ object Main {
       println(vtx.name)
       true
     })
+
+
+    GraphUtil.resetVisited(baseVertex)
+    GraphUtil.search(baseVertex, "Alpha", (vtx:Vertex) => {
+      println(vtx.name)
+      true
+    })
+
+    println(PersistenceUtil.readFile())
   }
 }
