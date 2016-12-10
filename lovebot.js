@@ -129,7 +129,7 @@ app.post("/message/", function(req, res) {
      *  send many love if someone tries to be offensive
      */
     for(let tr of triggerwords) {
-	if(message.indexOd(tr) > -1) {
+	if(message.indexOf(tr) > -1) {
 	    res.end("Many Love!!!");
 	}
     }
